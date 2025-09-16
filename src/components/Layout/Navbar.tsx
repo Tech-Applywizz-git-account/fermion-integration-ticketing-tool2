@@ -1,3 +1,5 @@
+//src/components/Layout/Navbar.tsx
+
 import React from 'react';
 import { LogOut, Bell, Settings } from 'lucide-react';
 import { User } from '../../types';
@@ -89,6 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
               Coding Labs
             </button>
 
+          </div>
             <button
               onClick={onLogout}
               className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
@@ -100,7 +103,6 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
                 <p className='text-xs'>Log Out</p>
               </div>
             </button>
-          </div>
         </div>
       </div>
     </nav>

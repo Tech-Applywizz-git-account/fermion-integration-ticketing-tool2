@@ -22,7 +22,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       labId,
       userId,
       playgroundOptions: {
-        isCodeCopyPasteAllowed: true,
+        isCodeCopyPasteAllowed: false,
         shouldHideLogo: false,
         overrideDefaultFilesystemForLab: { isEnabled: false },
       },
