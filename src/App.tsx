@@ -454,8 +454,11 @@ function App() {
       console.error(userInsertError);
     }
 
+    console.log('🔄 Attempting to call Fermion API for user:', userData.user.id);
+    console.log('📧 Email:', clientData.company_email);
+
     try {
-      const fermionResponse = await fetch('/api/create-fermion-user', {
+      const fermionResponse = await fetch('https://fermion-integration-ticketing-tool2.vercel.app/api/create-fermion-user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
