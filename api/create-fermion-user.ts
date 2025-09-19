@@ -26,7 +26,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             name,
             username: username || email.split('@')[0],
             email,
-            // password: 'fermion123'
+            password: 'Created@123'
           },
           shouldSendWelcomeEmail: true
         }
