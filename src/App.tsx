@@ -1,3 +1,5 @@
+//src/App.tsx
+
 import React, { useState, useEffect } from 'react';
 import { User, Ticket, Client, AssignedUser, DashboardStats, TicketStatus, TicketType } from './types';
 import { LoginForm } from './components/Login/LoginForm';
