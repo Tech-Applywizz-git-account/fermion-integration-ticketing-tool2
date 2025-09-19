@@ -11,8 +11,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).send('Server is not configured: missing FERMION_API_KEY or FERMION_SCHOOL_HOST');
   }
 
-  // const labId = (req.query.labId as string) || process.env.DEFAULT_FERMION_LAB_ID;
-  const labId = "68ccfa4b9e2503b1e9d3303a"
+  const labId = (req.query.labId as string) || process.env.DEFAULT_FERMION_LAB_ID;
   if (!labId) return res.status(400).send('labId is required');
 
   // ⚠️ For production, resolve userId from your server-side session instead of query.
