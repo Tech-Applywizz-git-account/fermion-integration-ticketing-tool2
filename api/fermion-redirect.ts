@@ -31,7 +31,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     { algorithm: 'HS256', expiresIn: '1h' }
   );
 
-  const url = `https://${schoolHost}/embed/lab?token=${encodeURIComponent(token)}`;
+  const url = `https://${schoolHost}/embed/io-coding-lab?token=${encodeURIComponent(token)}`;
   res.setHeader('Cache-Control', 'no-store');
   return res.redirect(302, url);
   
