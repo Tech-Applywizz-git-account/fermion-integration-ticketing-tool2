@@ -4,14 +4,47 @@ import React from 'react';
 import { LogOut, Bell, Settings } from 'lucide-react';
 import { User } from '../../types';
 import { roleLabels } from '../../data/mockData';
+import { supabase } from '../../lib/supabaseClient';
+import { useState, useEffect } from 'react';
 
 interface NavbarProps {
   user: User;
   onLogout: () => void;
 }
 
+
+
 export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
-  // console.log("Navbar user:", user);
+  const [badgeValue, setBadgeValue] = useState<number | null>(null);
+  const [codingLabUrl, setCodingLabUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBadgeValue = async () => {
+      if (!user?.email) return;
+
+      const { data, error } = await supabase
+        .from("clients")
+        .select("badge_value,coding_lab_url,company_email")
+        .eq("company_email", user.email)
+        .single();
+
+      if (error) {
+        console.error("Error fetching badge value:", error.message);
+        return;
+      }
+
+      if (data?.badge_value !== null) {
+        setBadgeValue(data.badge_value);
+      }
+      if (data?.coding_lab_url) {
+        setCodingLabUrl(data.coding_lab_url);
+      }
+    };
+
+    fetchBadgeValue();
+  }, [user?.email]);
+
+
   return (
     <nav className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-50">
       <div className="flex items-center justify-between">
@@ -80,16 +113,21 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
             >
               Coding Labs
             </button> */}
-            <button
-              className="text-sm px-2 py-1 bg-blue-100 text-blue-600 rounded-lg font-medium"
-              onClick={() => {
-                const uid = encodeURIComponent(user.id ?? user.email);
-                // Relative path works on Vercel (prod & preview)
-                window.open(`/api/fermion-redirect?uid=${uid}`, '_blank', 'noopener'); //uid
-              }}
-            >
-              Coding Lab
-            </button>
+            {(user.role === 'client' && badgeValue) && ( // show the button only if the user is a client and has a badgeValue
+              <button
+                className="text-sm px-2 py-1 bg-blue-100 text-blue-600 rounded-lg font-medium"
+                onClick={() => {
+                  const uid = encodeURIComponent(user.id ?? user.email);
+                  if (codingLabUrl==="vivek") {
+                    window.open(`/api/fermion-redirectvivek?uid=${uid}`, '_blank', 'noopener'); //uid
+                  }else {
+                    window.open(`/api/fermion-redirect?uid=${uid}`, '_blank', 'noopener'); //uid
+                  }}
+                }
+              >
+                Coding Lab
+              </button>
+            )}
 
           </div>
             <button
