@@ -85,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
               onClick={() => {
                 const uid = encodeURIComponent(user.id ?? user.email);
                 // Relative path works on Vercel (prod & preview)
-                window.open(`/api/fermion-redirect?uid=${uid}`, '_blank', 'noopener'); //uid
+                window.open(`/api/fermion-redirect?uid=${uid}&labId=68ccfa4b9e2503b1e9d3303a`, '_blank', 'noopener'); //uid
               }}
             >
               Coding Lab
