@@ -57,6 +57,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     console.log('✅ Fermion user created successfully');
+    console.log('🔗 User can login at: https://careerbadge.apply-wizz.com'); // Adjust URL as needed
     res.status(200).json({
       success: true,
       data,
