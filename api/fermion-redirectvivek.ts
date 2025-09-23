@@ -38,37 +38,32 @@
 // }
 
 // api/fermion-redirectvivek.ts
+// api/fermion-redirectvivek.ts
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
 
-// HARD-CODED API URL as requested (no .env for the URL)
-const ENROLL_URL = 'https://backend.codedamn.com/api/public/enroll-user-into-digital-product';
+// Hardcoded API URL (as requested)
+const ENROLL_URL =
+  'https://backend.codedamn.com/api/public/enroll-user-into-digital-product';
+
+// Hardcode the Fermion digital product ID (from your screenshot URL)
+const FERMION_PRODUCT_ID = '68d24a8b5824ea0d74588d52';
+
+// Your published contest URL (from your dashboard)
+const CONTEST_URL = 'https://careerbadge.apply-wizz.com/contest/situation-needs';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const apiKey = process.env.FERMION_API_KEY;
-    const schoolHost = process.env.FERMION_SCHOOL_HOST; // e.g., your-school.fermion.app
-    const fermionProductId = "68d24a8b5824ea0d74588d52"; // <-- set this in env
-
-    if (!apiKey || !schoolHost) {
-      return res
-        .status(500)
-        .send('Server is not configured: missing FERMION_API_KEY or FERMION_SCHOOL_HOST');
-    }
-    if (!fermionProductId) {
-      return res
-        .status(500)
-        .send('Server is not configured: missing FERMION_PRODUCT_ID_VIVEK');
-    }
+    const apiKey = process.env.FERMION_API_KEY; // keep secret in env
+    if (!apiKey) return res.status(500).send('Missing FERMION_API_KEY');
 
     const labId = (req.query.labId as string) || process.env.DEFAULT_FERMION_LAB_ID;
     if (!labId) return res.status(400).send('labId is required');
 
-    // ⚠️ In production, resolve userId from your server-side session
+    // ⚠️ In production, derive userId from your session
     const userId = (req.query.uid as string) || 'anon-user';
 
-    // 1) ENROLL the user into the Fermion digital product (contest)
-    //    This keeps your API key secret and ensures enrollment happens before redirect.
+    // 1) Enroll user into the Fermion digital product (contest)
     const enrollRes = await fetch(ENROLL_URL, {
       method: 'POST',
       headers: {
@@ -79,7 +74,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         data: [
           {
             data: {
-              fermionDigitalProductId: fermionProductId,
+              fermionDigitalProductId: FERMION_PRODUCT_ID,
               userId: userId,
             },
           },
@@ -87,16 +82,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }),
     });
 
-    if (!enrollRes.ok) {
+    // Treat "already enrolled" as success (409)
+    if (!enrollRes.ok && enrollRes.status !== 409) {
       const errText = await enrollRes.text();
-      // You can log this on the server for debugging
       console.error('Fermion enroll failed:', enrollRes.status, errText);
       return res
         .status(enrollRes.status)
         .send(`Enrollment failed: ${errText || 'unknown error'}`);
     }
 
-    // 2) Generate the token for the lab session (same as your current logic)
+    // 2) Sign the playground token
     const token = jwt.sign(
       {
         labId,
@@ -111,9 +106,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       { algorithm: 'HS256', expiresIn: '1h' }
     );
 
-    // 3) Redirect to your contest URL
-    const url = `https://careerbadge.apply-wizz.com/contest/nose-surrounded?token=${encodeURIComponent(token)}`;
-
+    // 3) Redirect to the contest page with token
+    const url = `${CONTEST_URL}?token=${encodeURIComponent(token)}`;
     res.setHeader('Cache-Control', 'no-store');
     return res.redirect(302, url);
   } catch (e: any) {
