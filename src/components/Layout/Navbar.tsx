@@ -50,10 +50,6 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
-            {/* <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AW</span>
-            </div>
-            <h1 className="text-xl font-bold text-gray-900">ApplyWizz</h1> */}
             <img className="text-xl font-bold text-gray-900 h-8 w-36" src="https://storage.googleapis.com/solwizz/website_content/Black%20Version.png" alt="agg" />
           </div>
           <div className="hidden md:block h-6 w-px bg-gray-300">
@@ -80,21 +76,6 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
         </div>
 
         <div className="flex items-center space-x-4">
-          {/* <button
-            className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
-            title="Notifications"
-            aria-label="Notifications"
-          >
-            <Bell className="h-5 w-5" />
-          </button>
-
-          <button
-            className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
-            title="Settings"
-            aria-label="Settings"
-          >
-            <Settings className="h-5 w-5" />
-          </button> */}
 
           <div className="flex items-center space-x-3">
             <div className="text-right">
@@ -102,17 +83,6 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
               <div className="text-sm font-medium text-gray-900">{user.email}</div>
               {/* <div className="text-xs text-gray-500">{}</div> */}
             </div>
-            {/* <button
-              className='text-sm px-2 py-1 bg-blue-100 text-blue-600 rounded-lg font-medium'
-              onClick={() => {
-                const labId = '68aa42ade9597b1e6bc69fd2'; // use your real labId
-                const uid = encodeURIComponent(user.id ?? user.email);
-                const apiBase = import.meta.env.DEV ? 'http://localhost:3000' : ''; // dev uses vercel dev port
-                window.open(`${apiBase}/api/fermion-redirect?labId=${labId}&uid=${uid}`, '_blank', 'noopener');
-              }}
-            >
-              Coding Labs
-            </button> */}
             {(user.role === 'client' && badgeValue) && ( // show the button only if the user is a client and has a badgeValue
               <button
                 className="text-sm px-2 py-1 bg-blue-100 text-blue-600 rounded-lg font-medium"
