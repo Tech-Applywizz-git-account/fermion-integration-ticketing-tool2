@@ -48,7 +48,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const apiKey = process.env.FERMION_API_KEY;
     const schoolHost = process.env.FERMION_SCHOOL_HOST; // e.g., your-school.fermion.app
-    const fermionProductId = "nose-surrounded"; // <-- set this in env
+    const fermionProductId = "68d24a8b5824ea0d74588d52"; // <-- set this in env
 
     if (!apiKey || !schoolHost) {
       return res
