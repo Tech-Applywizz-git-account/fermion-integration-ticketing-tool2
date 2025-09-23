@@ -48,7 +48,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const apiKey = process.env.FERMION_API_KEY;
     const schoolHost = process.env.FERMION_SCHOOL_HOST; // e.g., your-school.fermion.app
-    const fermionProductId = process.env.FERMION_PRODUCT_ID_VIVEK; // <-- set this in env
+    const fermionProductId = "nose-surrounded"; // <-- set this in env
 
     if (!apiKey || !schoolHost) {
       return res
@@ -112,9 +112,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     // 3) Redirect to your contest URL
-    const url = `https://careerbadge.apply-wizz.com/contest/nose-surrounded?token=${encodeURIComponent(
-      token
-    )}`;
+    const url = `https://careerbadge.apply-wizz.com/contest/nose-surrounded?token=${encodeURIComponent(token)}`;
 
     res.setHeader('Cache-Control', 'no-store');
     return res.redirect(302, url);
