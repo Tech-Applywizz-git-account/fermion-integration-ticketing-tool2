@@ -7,10 +7,11 @@ const ENROLL_URL =
   'https://backend.codedamn.com/api/public/enroll-user-into-digital-product';
 
 // Hardcode the Fermion digital product ID (from your screenshot URL)
-const FERMION_PRODUCT_ID = '68d24a8b5824ea0d74588d52';
+// const FERMION_PRODUCT_ID = '68d24a8b5824ea0d74588d52';
+const FERMION_PRODUCT_ID = '68d1013f7183c17964b104c8';
 
 // Your published contest URL (from your dashboard)
-const CONTEST_URL = 'https://careerbadge.apply-wizz.com/contest/situation-needs';
+const CONTEST_URL = 'https://careerbadge.apply-wizz.com/contest/just-believed';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -71,7 +72,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Cache-Control', 'no-store');
     return res.redirect(302, url);
   } catch (e: any) {
-    console.error('fermion-redirectvivek error:', e);
+    console.error('fermion-redirectbe3 error:', e);
     return res.status(500).send(`Unexpected server error: ${e?.message || e}`);
   }
 }

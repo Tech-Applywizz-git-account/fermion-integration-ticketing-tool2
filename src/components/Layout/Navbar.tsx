@@ -90,7 +90,10 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
                   const uid = encodeURIComponent(user.id ?? user.email);
                   if (codingLabUrl==="vivek") {
                     window.open(`/api/fermion-redirectvivek?uid=${uid}`, '_blank', 'noopener'); //uid
-                  }else {
+                  }else if (codingLabUrl==="be3") {
+                    window.open(`/api/fermion-redirectbe3?uid=${uid}`, '_blank', 'noopener'); //uid
+                  }
+                  else {
                     window.open(`/api/fermion-redirect?uid=${uid}`, '_blank', 'noopener'); //uid
                   }}
                 }
